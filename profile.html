@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - SchoolMart</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <span>SchoolMart</span>
+            </div>
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search for school supplies...">
+                    <button class="voice-search-btn" id="voiceSearchBtn">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="nav-actions">
+                <a href="profile.html" class="nav-link active" id="profileLink">
+                    <i class="fas fa-user"></i>
+                    <span id="userGreeting">Account</span>
+                </a>
+                <a href="cart.html" class="nav-link cart-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">All Products</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Categories <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="products.html?category=stationery">Stationery</a>
+                        <a href="products.html?category=uniforms">Uniforms</a>
+                        <a href="products.html?category=tech">Technology</a>
+                        <a href="products.html?category=backpacks">Backpacks</a>
+                        <a href="products.html?category=books">Books</a>
+                        <a href="products.html?category=lunch">Lunch Boxes</a>
+                    </div>
+                </li>
+                <li><a href="#">Deals</a></li>
+                <li><a href="#">Support</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> > <span>My Profile</span>
+            </div>
+
+            <div class="profile-container" id="profileContainer">
+                <!-- Profile content will be loaded here -->
+            </div>
+
+            <!-- Login Prompt -->
+            <div class="login-prompt" id="loginPrompt" style="display: none;">
+                <div class="login-prompt-content">
+                    <i class="fas fa-user-circle"></i>
+                    <h2>Please Sign In</h2>
+                    <p>You need to be logged in to view your profile</p>
+                    <div class="login-prompt-actions">
+                        <a href="login.html" class="cta-btn">Sign In</a>
+                        <a href="signup.html" class="outline-btn">Create Account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SchoolMart</h3>
+                    <p>Your trusted partner for all school shopping needs</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Track Order</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 SchoolMart. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Voice Assistant Indicator -->
+    <div id="voiceIndicator" class="voice-indicator">
+        <div class="voice-animation">
+            <i class="fas fa-microphone"></i>
+        </div>
+        <p>Listening... Say "Hey Mave" to activate</p>
+    </div>
+
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/voice.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProfile();
+        });
+
+        function loadProfile() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const profileContainer = document.getElementById('profileContainer');
+            const loginPrompt = document.getElementById('loginPrompt');
+
+            if (!currentUser) {
+                loginPrompt.style.display = 'block';
+                profileContainer.style.display = 'none';
+                return;
+            }
+
+            // Load saved items and order history
+            const savedItems = JSON.parse(localStorage.getItem('savedItems_' + currentUser.id) || '[]');
+            const orderHistory = JSON.parse(localStorage.getItem('orderHistory_' + currentUser.id) || '[]');
+
+            profileContainer.innerHTML = `
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="profile-info">
+                        <h1>${currentUser.firstName} ${currentUser.lastName}</h1>
+                        <p>${currentUser.email}</p>
+                        <p>Member since ${new Date(currentUser.joinDate).toLocaleDateString()}</p>
+                    </div>
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </div>
+
+                <div class="profile-tabs">
+                    <button class="tab-btn active" onclick="showTab('details')">Personal Details</button>
+                    <button class="tab-btn" onclick="showTab('orders')">Order History</button>
+                    <button class="tab-btn" onclick="showTab('saved')">Saved Items</button>
+                    <button class="tab-btn" onclick="showTab('settings')">Settings</button>
+                </div>
+
+                <div class="tab-content">
+                    <div id="details" class="tab-panel active">
+                        <div class="profile-section">
+                            <h2>Personal Information</h2>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <label>Full Name</label>
+                                    <span>${currentUser.firstName} ${currentUser.lastName}</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Email</label>
+                                    <span>${currentUser.email}</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Phone</label>
+                                    <span>${currentUser.phone || 'Not provided'}</span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Date of Birth</label>
+                                    <span>${currentUser.dob ? new Date(currentUser.dob).toLocaleDateString() : 'Not provided'}</span>
+                                </div>
+                            </div>
+                            <button class="edit-profile-btn">Edit Profile</button>
+                        </div>
+                    </div>
+
+                    <div id="orders" class="tab-panel">
+                        <div class="profile-section">
+                            <h2>Order History</h2>
+                            <div class="orders-list">
+                                ${orderHistory.length > 0 ? 
+                                    orderHistory.map(order => `
+                                        <div class="order-item">
+                                            <div class="order-info">
+                                                <h4>Order #${order.id}</h4>
+                                                <p>Date: ${new Date(order.date).toLocaleDateString()}</p>
+                                                <p>Status: <span class="status ${order.status}">${order.status}</span></p>
+                                            </div>
+                                            <div class="order-total">
+                                                <strong>₦${order.total.toLocaleString()}</strong>
+                                            </div>
+                                        </div>
+                                    `).join('') 
+                                    : '<p>No orders yet. <a href="products.html">Start shopping!</a></p>'
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="saved" class="tab-panel">
+                        <div class="profile-section">
+                            <h2>Saved Items</h2>
+                            <div class="saved-items-grid">
+                                ${savedItems.length > 0 ? 
+                                    savedItems.map(item => `
+                                        <div class="saved-item">
+                                            <img src="${item.image}" alt="${item.name}">
+                                            <h4>${item.name}</h4>
+                                            <p class="price">₦${item.price.toLocaleString()}</p>
+                                            <button class="remove-saved-btn" onclick="removeSavedItem('${item.id}')">Remove</button>
+                                        </div>
+                                    `).join('')
+                                    : '<p>No saved items yet. <a href="products.html">Browse products!</a></p>'
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="settings" class="tab-panel">
+                        <div class="profile-section">
+                            <h2>Account Settings</h2>
+                            <div class="settings-list">
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <h4>Email Notifications</h4>
+                                        <p>Receive updates about your orders and promotions</p>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <h4>SMS Notifications</h4>
+                                        <p>Get text messages about order updates</p>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="setting-item">
+                                    <div class="setting-info">
+                                        <h4>Voice Assistant</h4>
+                                        <p>Enable Mave voice assistant</p>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showTab(tabName) {
+            // Hide all tab panels
+            document.querySelectorAll('.tab-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab panel
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            }
+        }
+
+        function removeSavedItem(itemId) {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            let savedItems = JSON.parse(localStorage.getItem('savedItems_' + currentUser.id) || '[]');
+            
+            savedItems = savedItems.filter(item => item.id !== itemId);
+            localStorage.setItem('savedItems_' + currentUser.id, JSON.stringify(savedItems));
+            
+            loadProfile(); // Reload profile to update the saved items
+        }
+    </script>
+</body>
+</html>

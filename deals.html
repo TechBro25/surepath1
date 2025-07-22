@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hot Deals – SurePath School Store</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: #f9f9f9;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+      background: #0058a3;
+      color: white;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 2.5em;
+    }
+
+    .deals-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
+
+    .deal-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+      position: relative;
+      transition: 0.3s;
+    }
+
+    .deal-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .deal-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .deal-content {
+      padding: 15px;
+    }
+
+    .deal-content h3 {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-size: 1.1em;
+      color: #e91e63;
+      font-weight: bold;
+    }
+
+    .old-price {
+      text-decoration: line-through;
+      color: #888;
+      font-size: 0.9em;
+      margin-left: 8px;
+    }
+
+    .discount-tag {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: red;
+      color: white;
+      padding: 5px 10px;
+      font-size: 0.8em;
+      border-radius: 5px;
+    }
+
+    .countdown {
+      margin-top: 10px;
+      font-size: 0.85em;
+      color: #555;
+    }
+
+    @media screen and (max-width: 500px) {
+      .deal-content h3 {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🔥 Hot School Deals</h1>
+    <p>Limited time offers on school essentials</p>
+  </header>
+
+  <section class="deals-container" id="deals"></section>
+
+  <script>
+    const deals = [
+      {
+        name: "Notebook Pack (5pcs)",
+        image: "https://via.placeholder.com/300x180?text=Notebook",
+        price: 1250,
+        oldPrice: 1800,
+        discount: "30%",
+        endTime: "2025-07-22T23:59:59"
+      },
+      {
+        name: "School Backpack",
+        image: "https://via.placeholder.com/300x180?text=Backpack",
+        price: 3500,
+        oldPrice: 4500,
+        discount: "22%",
+        endTime: "2025-07-22T18:00:00"
+      },
+      {
+        name: "Scientific Calculator",
+        image: "https://via.placeholder.com/300x180?text=Calculator",
+        price: 2100,
+        oldPrice: 2700,
+        discount: "25%",
+        endTime: "2025-07-22T20:30:00"
+      },
+      {
+        name: "Pen Bundle (20pcs)",
+        image: "https://via.placeholder.com/300x180?text=Pen+Bundle",
+        price: 800,
+        oldPrice: 1200,
+        discount: "33%",
+        endTime: "2025-07-22T22:00:00"
+      }
+    ];
+
+    const dealsContainer = document.getElementById("deals");
+
+    function updateCountdown(endTime, el) {
+      const end = new Date(endTime).getTime();
+      const now = new Date().getTime();
+      const diff = end - now;
+
+      if (diff <= 0) {
+        el.innerText = "Expired!";
+        return;
+      }
+
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      el.innerText = `⏳ Ends in: ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    deals.forEach(deal => {
+      const card = document.createElement("div");
+      card.className = "deal-card";
+
+      card.innerHTML = `
+        <div class="discount-tag">${deal.discount} OFF</div>
+        <img src="${deal.image}" alt="${deal.name}">
+        <div class="deal-content">
+          <h3>${deal.name}</h3>
+          <p class="price">₦${deal.price.toLocaleString()} <span class="old-price">₦${deal.oldPrice.toLocaleString()}</span></p>
+          <div class="countdown">⏳ Ends in: loading...</div>
+        </div>
+      `;
+
+      dealsContainer.appendChild(card);
+
+      const countdownEl = card.querySelector(".countdown");
+      updateCountdown(deal.endTime, countdownEl);
+      setInterval(() => updateCountdown(deal.endTime, countdownEl), 1000);
+    });
+  </script>
+
+</body>
+</html>

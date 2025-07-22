@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - SchoolMart</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>SchoolMart</span>
+                </div>
+                <h1>Create Account</h1>
+                <p>Join SchoolMart today</p>
+            </div>
+
+            <form class="auth-form" id="signupForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" required data-voice="first name">
+                        <i class="fas fa-user form-icon"></i>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" required data-voice="last name">
+                        <i class="fas fa-user form-icon"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" name="email" required data-voice="email">
+                    <i class="fas fa-envelope form-icon"></i>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required data-voice="phone number">
+                    <i class="fas fa-phone form-icon"></i>
+                </div>
+
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" name="dob" data-voice="date of birth">
+                    <i class="fas fa-calendar form-icon"></i>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" name="password" required data-voice="password">
+                    <i class="fas fa-lock form-icon"></i>
+                    <button type="button" class="password-toggle" onclick="togglePassword('signupPassword')">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required data-voice="confirm password">
+                    <i class="fas fa-lock form-icon"></i>
+                    <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <span class="checkmark"></span>
+                        I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <button type="submit" class="auth-btn">Create Account</button>
+
+                <div class="voice-fill-option">
+                    <button type="button" class="voice-fill-btn" id="voiceFillBtn">
+                        <i class="fas fa-microphone"></i>
+                        Fill with Voice
+                    </button>
+                    <small>Say "Hey Mave" to start voice input</small>
+                </div>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a href="login.html">Sign in here</a></p>
+            </div>
+
+            <div class="back-to-home">
+                <a href="index.html">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Voice Assistant Indicator -->
+    <div id="voiceIndicator" class="voice-indicator">
+        <div class="voice-animation">
+            <i class="fas fa-microphone"></i>
+        </div>
+        <p>Listening... Say "Hey Mave" to activate</p>
+    </div>
+
+    <script src="js/voice.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const userData = Object.fromEntries(formData);
+            
+            // Check if passwords match
+            if (userData.password !== userData.confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+            
+            // Get existing users
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            
+            // Check if email already exists
+            if (users.find(user => user.email === userData.email)) {
+                alert('Email already registered');
+                return;
+            }
+            
+            // Remove confirm password and add user
+            delete userData.confirmPassword;
+            userData.id = Date.now().toString();
+            userData.joinDate = new Date().toISOString();
+            
+            users.push(userData);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Auto login
+            localStorage.setItem('currentUser', JSON.stringify(userData));
+            
+            alert('Account created successfully!');
+            window.location.href = 'index.html';
+        });
+
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const toggle = input.nextElementSibling.nextElementSibling;
+            const icon = toggle.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+        }
+    </script>
+</body>
+</html>

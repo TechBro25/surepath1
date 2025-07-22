@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SchoolMart - Your One-Stop School Shopping Destination</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <span>SurePath</span>
+            </div>
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search for school supplies...">
+                    <button class="voice-search-btn" id="voiceSearchBtn">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="nav-actions">
+                <a href="profile.html" class="nav-link" id="profileLink">
+                    <i class="fas fa-user"></i>
+                    <span id="userGreeting">Account</span>
+                </a>
+                <a href="cart.html" class="nav-link cart-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container">
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="products.html">All Products</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Categories <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="products.html?category=stationery">Stationery</a>
+                        <a href="products.html?category=uniforms">Uniforms</a>
+                        <a href="products.html?category=tech">Technology</a>
+                        <a href="products.html?category=backpacks">Backpacks</a>
+                        <a href="products.html?category=books">Books</a>
+                        <a href="products.html?category=lunch">Lunch Boxes</a>
+                    </div>
+                </li>
+                <li><a href="support.html">Support</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero-banner">
+            <div class="container">
+                <div class="banner-content">
+                    <h1>Back to School Essentials</h1>
+                    <p>Get everything you need for a successful academic year</p>
+                    <button class="cta-btn">Shop Now</button>
+                </div>
+                <div class="banner-image">
+                    <img src="/WhatsApp Image 2025-07-21 at 09.50.19_e492d037.jpg" alt="School supplies">
+                </div>
+            </div>
+        </section>
+
+        <section class="categories-section">
+            <div class="container">
+                <h2 class="section-title">Shop by Category</h2>
+                <div class="categories-grid">
+                    <div class="category-card" data-category="stationery">
+                        <div class="category-icon">
+                            <i class="fas fa-pen"></i>
+                        </div>
+                        <h3>Stationery</h3>
+                        <p>Pens, pencils, notebooks and more</p>
+                    </div>
+                    <div class="category-card" data-category="uniforms">
+                        <div class="category-icon">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <h3>Uniforms</h3>
+                        <p>School uniforms and accessories</p>
+                    </div>
+                    <div class="category-card" data-category="tech">
+                        <div class="category-icon">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <h3>Technology</h3>
+                        <p>Laptops, calculators, tablets</p>
+                    </div>
+                    <div class="category-card" data-category="backpacks">
+                        <div class="category-icon">
+                            <i class="fas fa-backpack"></i>
+                        </div>
+                        <h3>Backpacks</h3>
+                        <p>School bags and backpacks</p>
+                    </div>
+                    <div class="category-card" data-category="books">
+                        <div class="category-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3>Books</h3>
+                        <p>Textbooks and reading materials</p>
+                    </div>
+                    <div class="category-card" data-category="lunch">
+                        <div class="category-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <h3>Lunch Boxes</h3>
+                        <p>Lunch boxes and water bottles</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-products">
+            <div class="container">
+                <h2 class="section-title">Featured Products</h2>
+                <div class="products-grid" id="featuredProducts">
+                    <!-- Products will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <section class="deals-banner">
+            <div class="container">
+                <div class="deal-content">
+                    <h2>Special Back-to-School Deals</h2>
+                    <p>Up to 50% off on selected items</p>
+                    <button class="cta-btn">View Deals</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SchoolMart</h3>
+                    <p>Your trusted partner for all school shopping needs</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="support.html">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Track Order</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 SchoolMart. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Voice Assistant Indicator -->
+    <div id="voiceIndicator" class="voice-indicator">
+        <div class="voice-animation">
+            <i class="fas fa-microphone"></i>
+        </div>
+        <p>Listening... Say "Hey Mave" to activate</p>
+    </div>
+
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/voice.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
